@@ -22,58 +22,81 @@ class Game{
             form = new Form 
             form.display(); 
         }
-        player1 = createSprite(100,displayHeight,50,50)
-        player2 = createSprite(200,displayHeight,50,50)
-        player3 = createSprite(200,displayHeight,50,50)
-        player4 = createSprite(200,displayHeight,50,50)
-        carset = [player1, player2, player3, player4]
+        player1 = createSprite(100,100,20,20);
+        player2 = createSprite(100,200,20,20);
+        player3 = createSprite(100,300,20,20);
+        player4 = createSprite(100,400,20,20);
+        
+        ground1 = createSprite(500,120,1000,10);
+        ground2 = createSprite(500,220,1000,10);
+        ground3 = createSprite(500,320,1000,10);
+        ground4 = createSprite(500,420,1000,10);
+        plrset = [player1, player2, player3, player4];
+        
+        o11 = createSprite(200,100,20, 20);
+        o12 = createSprite(300,100,20, 20);
+        o13 = createSprite(500,100,20, 20);
+        o14 = createSprite(600,100,20, 20);
+        o15 = createSprite(700,100,20, 20);
+
+        o21 = createSprite(200,200,20, 20);
+        o22 = createSprite(300,200,20, 20);
+        o23 = createSprite(500,200,20, 20);
+        o24 = createSprite(600,200,20, 20);
+        o25 = createSprite(700,200,20, 20);
+       
+        o31 = createSprite(200,300,20, 20);
+        o32 = createSprite(300,300,20, 20);
+        o33 = createSprite(500,300,20, 20);
+        o34 = createSprite(600,300,20, 20);
+        o35 = createSprite(700,300,20, 20);
+       
+        o41 = createSprite(200,400,20, 20);
+        o42 = createSprite(300,400,20, 20);
+        o43 = createSprite(500,400,20, 20);
+        o44 = createSprite(600,400,20, 20);
+        o45 = createSprite(700,400,20, 20);
+
 
     }
     play(){
         form.hide();
         Player.getAllPlayerInfo();
         player.getPE();
-        
-        if(allPlayers !== undefined ){
-            //imageMode(CENTER)
-            //image(trackimg, 1000, -1.4 * displayHeight, 1000, 5 * displayHeight)
-            
-            var playersy = 800
-            var boardy = 130
-            var playersx = 850
-            var index = 0
-            
-            //car + playerindex 
-            for(var plr in allPlayers){
-                playersy = displayHeight - allPlayers[plr].distance
-                carset[index].x = playersx
-                carset[index].y = playersy
-                if(plr === "player" + player.index){
-                    fill("red")
-                    ellipse(carset[index].x, carset[index].y, 60, 60)
-                    camera.position.x = displayWidth/2
-                    camera.position.y = carset[index].y
-                }
-                else{
-                    fill("black")
-                    
-                }
-                boardy = boardy + 20
-                text(allPlayers[plr].name + ": " + allPlayers[plr].distance, 100, boardy)
-
-            index = index + 1
-            playersx = playersx + 300
-
+        plrset[0].collide(ground1);
+        plrset[1].collide(ground2);
+        plrset[2].collide(ground3);
+        plrset[3].collide(ground4);
+        plrset[player.index - 1 ].shapeColor = "black" ;
+        if(allPlayers !== undefined){
+        for(var i = 1; i < 5; i++ ){
+            if(i !== player.index){
+            var posx = allPlayers["player" + i]["positionx"]
+            var posy = allPlayers["player"+ i]["positiony"]
+            plrset[i - 1].position.x = posx
+            plrset[i - 1].position.y = posy
             }
         }
-        
-        if(keyIsDown(UP_ARROW) && player.index !== null && player.distance < 5185 ){
-            player.distance = player.distance + 20
+    }
+        if(keyIsDown(UP_ARROW) && player.index !== null && player.distance < 4350 && plrset[player.index - 1].position.y > player.index * 100){
+            player.positionx =  plrset[player.index - 1].position.x
+            player.positiony =  plrset[player.index - 1].position.y
             player.updatePlayerInfo();
-            accelsound.play();
+            plrset[player.index - 1].position.y = plrset[player.index - 1].position.y - 50
+            console.log("hello")
+
+        }
+        if(keyIsDown(RIGHT_ARROW) && player.distance < 4350){
+            player.positionx =  plrset[player.index - 1].position.x
+            player.positiony =  plrset[player.index - 1].position.y
+            player.distance = player.distance + 50
+            player.updatePlayerInfo(); 
+            plrset[player.index - 1].position.x = plrset[player.index - 1].position.x + 10
+            
         }
         
-        if(player.distance === 5180){
+        if(player.distance > 4349 && flag === 0){
+            
             player.rank = player.rank + 1
             Player.updatePE(player.rank)
             gameState = 2;
@@ -82,15 +105,20 @@ class Game{
 
     }
     end(){
+        
         console.log("game over!")
         this.updateGS(2)
         textSize(18);
+        if(flag === 0){
         if(player.rank === 1){
            console.log("You Win. 1st place")
+           flag = flag +1
         }
         else{
-            console.log("You Win. 1st place" )
+            console.log("You Lose")
+            flag = flag + 1
          }
     }
+}
 
 }

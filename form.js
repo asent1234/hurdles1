@@ -39,6 +39,8 @@ class Form{
         this.resetbutton.mousePressed(() =>{
            game.updateGS(0);
            player.updatePC(0);
+           player.rank = 0
+           Player.updatePE(0)
            
         })
     }
@@ -48,3 +50,7 @@ class Form{
     this.greeting.hide();
     }
 }
+function gravity(object){
+    object.velocityY = object.velocityY + 0.8 
+}
+   

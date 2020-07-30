@@ -4,6 +4,8 @@ class Player{
         this.distance = 0
         this.index = null
         this.rank = 0
+        this.positionx = 0
+        this.positiony =  0
     }
      getPC(){
         var pcrefer = database.ref('playerCount')
@@ -17,16 +19,17 @@ class Player{
              playerCount :  count
          })
      }
+     
      getPE(){
-        var cerefer = database.ref('playerendnum')
-        cerefer.on("value", (data) => {
+        var perefer = database.ref('playerendnum')
+        perefer.on("value", (data) => {
             this.rank = data.val();
         })
      }
      static updatePE(count){
          var updateceref = database.ref('/')
          updateceref.update({
-             carendnum :  count
+             playerendnum :  count
          })
      }
      updatePlayerInfo(){
@@ -34,7 +37,9 @@ class Player{
          var pindexref = database.ref(playerindex)
          pindexref.set({
             name : this.name,
-            distance: this.distance
+            distance: this.distance,
+            positionx: this.positionx,
+            positiony: this.positiony
          })
      }
      
