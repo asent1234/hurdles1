@@ -67,6 +67,19 @@ class Game{
         plrset[1].collide(ground2);
         plrset[2].collide(ground3);
         plrset[3].collide(ground4);
+
+        if(plrset[0].isTouching(o11) ||plrset[0].isTouching(o12) || plrset[0].isTouching(o13) || plrset[0].isTouching(o14) ){
+            plrset[0].remove();
+        }
+        if(plrset[1].isTouching(o21) ||plrset[1].isTouching(o22) || plrset[1].isTouching(o23) || plrset[1].isTouching(o24) ){
+            plrset[1].remove();
+        }
+        if(plrset[2].isTouching(o31) ||plrset[2].isTouching(o32) || plrset[2].isTouching(o33) || plrset[2].isTouching(o34) ){
+            plrset[2].remove();
+        }
+        if(plrset[3].isTouching(o41) ||plrset[3].isTouching(o42) || plrset[3].isTouching(o43) || plrset[3].isTouching(o44) ){
+            plrset[3].remove();
+        }
         plrset[player.index - 1 ].shapeColor = "black" ;
         if(allPlayers !== undefined){
         for(var i = 1; i < 5; i++ ){
